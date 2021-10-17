@@ -5,17 +5,19 @@ module.exports.getReview = async () => {
     const reviews = await Review.getReviews();
     return reviews;
   } catch (e) {
-    throw new Error(e);
+    console.log(e);
   }
 };
 
 module.exports.addNewReview = async (body) => {
   console.log({ body });
   const review = new Review(body);
+  const { averageRating } = await Review.getReviews();
+
   try {
-    const newRating = await review.save();
-    return newRating;
+    const newReview = await review.save();
+    return { newReview, averageRating };
   } catch (e) {
-    res.status(400).send(e);
+    console.log(e);
   }
 };
