@@ -3,7 +3,6 @@ const Review = require("../models/review");
 const router = new express.Router();
 
 router.post("/reviews", async (req, res) => {
-  console.log(req.body);
   const review = new Review({
     ...req.body,
   });

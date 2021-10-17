@@ -4,7 +4,7 @@ const http = require("http");
 const socketIo = require("socket.io");
 require("dotenv").config();
 
-const { getReview } = require("./utils");
+const { getReview, addNewReview } = require("./utils");
 PORT = process.env.PORT || 5500;
 
 // const router = require("./routers/review");
@@ -35,6 +35,15 @@ io.on("connection", async (socket) => {
       socket.emit("getReviews", response);
     } catch (error) {
       console.error(error);
+    }
+  });
+
+  socket.on("addNewReview", async (body) => {
+    try {
+      const newReview = await addNewReview(body);
+      io.emit("newReview", newReview);
+    } catch (error) {
+      console.log(error);
     }
   });
 
