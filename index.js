@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors")
 const http = require("http");
 
 const socketIo = require("socket.io");
@@ -11,12 +12,9 @@ PORT = process.env.PORT || 5500;
 require("./db/mongoose");
 
 const app = express();
-const server = http.createServer(app, {
-  cors: {
-    origin: "http://localhost:3000",
-    credentials: true,
-  },
-});
+app.use(cors());
+
+const server = http.createServer(app);
 const io = socketIo(server);
 
 io.on("connection", async (socket) => {
