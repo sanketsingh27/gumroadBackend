@@ -13,8 +13,7 @@ require("./db/mongoose");
 const app = express();
 const server = http.createServer(app, {
   cors: {
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: "*",
   },
 });
 const io = socketIo(server);
