@@ -19,12 +19,9 @@ const io = socketIo(server);
 
 io.on("connection", async (socket) => {
   console.log("New client connected");
-  try {
-    const response = await getReview();
-    socket.emit("getReviews", response);
-  } catch (error) {
-    console.error(error);
-  }
+
+  const response = await getReview();
+  socket.emit("getReviews", response);
 
   socket.on("getReviews", async () => {
     console.log("get review called ");
@@ -39,6 +36,7 @@ io.on("connection", async (socket) => {
   socket.on("addNewReview", async (body) => {
     try {
       const newReview = await addNewReview(body);
+      console.log({ newReview });
       io.emit("newReview", newReview);
     } catch (error) {
       console.log(error);
